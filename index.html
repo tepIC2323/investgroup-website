@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGroup - Финансовые услуги и инвестиции</title>
+    <style>
+        :root {
+            --primary-color: #1a3a5f;
+            --secondary-color: #2c5a8c;
+            --accent-color: #4a90e2;
+            --success-color: #27ae60;
+            --light-color: #f5f7fa;
+            --dark-color: #333;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .restricted {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .about-text {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .service-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .service-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Securities */
+        .securities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .security-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .security-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .security-chart {
+            height: 120px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            margin: 1rem 0;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,50 L20,40 L40,60 L60,30 L80,70 L100,50" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none" /></svg>');
+        }
+        
+        .security-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .security-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+        
+        .security-change {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Analytics */
+        .analytics-content {
+            margin: 2rem 0;
+        }
+        
+        .analytics-item {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .analytics-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .market-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .indicator {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .indicator-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .indicator-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .analytics-chart {
+            height: 200px;
+            background: linear-gradient(180deg, #f0f7ff, #e1eeff);
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            padding: 0 1rem;
+        }
+        
+        .chart-bar {
+            width: 30px;
+            background: var(--accent-color);
+            border-radius: 4px 4px 0 0;
+        }
+        
+        /* Client Database */
+        .client-database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .client-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .client-card.corporate {
+            border-left-color: var(--primary-color);
+        }
+        
+        .client-card.private {
+            border-left-color: var(--success-color);
+        }
+        
+        .client-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .client-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .client-stat {
+            text-align: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 6px;
+        }
+        
+        .client-stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .client-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+        
+        /* Registration & Login Forms */
+        .auth-forms {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .auth-form {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 6px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3a7bc8;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .form-switch {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-switch a {
+            color: var(--accent-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        /* User Panel */
+        .user-panel {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .user-panel.active {
+            display: block;
+        }
+        
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-welcome {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .user-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .user-stat {
+            text-align: center;
+        }
+        
+        .user-stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .user-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .client-database-info {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0 1rem;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .client-database {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .client-database h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        /* Image Styles */
+        .company-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .team-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .office-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .client-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .client-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .chart-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .logo-image {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                display: none;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .auth-forms {
+                flex-direction: column;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .user-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .client-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .client-image {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo" id="mainLogo">
+                <!-- ФОТО 1: Логотип -->
+                <img src="logo.png" alt="InvestGroup Logo" class="logo-image">
+                InvestGroup
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a id="servicesLink" class="restricted">Услуги</a></li>
+                    <li><a id="securitiesLink" class="restricted">Ценные бумаги</a></li>
+                    <li><a id="clientsLink">Клиенты</a></li>
+                    <li><a id="analyticsLink" class="restricted">Аналитика</a></li>
+                    <li><a id="authLink">Вход / Регистрация</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- User Panel -->
+        <div id="userPanel" class="user-panel">
+            <div class="user-info">
+                <div class="user-welcome">
+                    Добро пожаловать, <span id="userName">Пользователь</span>!
+                </div>
+                <div class="user-stats">
+                    <div class="user-stat">
+                        <div class="user-stat-value" id="portfolioValue">1,250,000 ₽</div>
+                        <div class="user-stat-label">Портфель</div>
+                    </div>
+                    <div class="user-stat">
+                        <div class="user-stat-value" id="portfolioChange">+5.7%</div>
+                        <div class="user-stat-label">Изменение</div>
+                    </div>
+                    <div class="user-stat">
+                        <button class="btn" id="logoutBtn">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главная страница -->
+        <section id="main-section" class="section active">
+            <h2 class="section-title">О компании InvestGroup</h2>
+            
+            <!-- ФОТО 2: Главный офис -->
+            <img src="office-building.png" alt="Главный офис InvestGroup" class="company-image">
+            
+            <div class="about-text">
+                <p><strong>InvestGroup</strong> — это ведущая финансовая компания с более чем 15-летним опытом работы на рынке инвестиционных услуг. Мы специализируемся на предоставлении комплексных решений для управления капиталом частных и корпоративных клиентов.</p>
+                
+                <p>Наша команда состоит из высококвалифицированных специалистов с глубокими знаниями в области финансовых рынков, инвестиционного анализа и управления портфелями активов.</p>
+            </div>
+            
+            <!-- ФОТО 3: Команда экспертов -->
+            <img src="team-experts.png" alt="Команда экспертов InvestGroup" class="team-image">
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Наша миссия</h3>
+                    <p>Помогать клиентам достигать финансовых целей через профессиональное управление активами и стратегическое инвестирование в перспективные рынки и инструменты.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Наши ценности</h3>
+                    <p>Прозрачность, профессионализм, индивидуальный подход и долгосрочное партнерство — основа нашей работы с каждым клиентом.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Наши достижения</h3>
+                    <p>Более 500 успешных клиентов, управление активами на сумму свыше 2 млрд рублей и стабильная доходность выше рыночных показателей.</p>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h2 class="section-title">База клиентов</h2>
+                <p>Наша база клиентов включает успешные компании и частных инвесторов, которые доверили нам управление своими активами. Вот некоторые из них:</p>
+                
+                <div class="client-database-grid">
+                    <div class="client-card corporate">
+                        <div class="client-header">
+                            <!-- ФОТО 7: Корпоративный клиент -->
+                            <img src="client-corporate.png" alt="ТехноПром Групп" class="client-image">
+                            <h3><span class="client-icon">🏢</span> ТехноПром Групп</h3>
+                        </div>
+                        <p>Крупный производитель промышленного оборудования</p>
+                        <div class="client-stats">
+                            <div class="client-stat">
+                                <div class="client-stat-value">18.2%</div>
+                                <div class="client-stat-label">Доходность</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">3 года</div>
+                                <div class="client-stat-label">Сотрудничество</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="client-card private">
+                        <div class="client-header">
+                            <!-- ФОТО 8: Частный клиент -->
+                            <img src="client-private.png" alt="Сергей Иванов" class="client-image">
+                            <h3><span class="client-icon">👨‍💼</span> Сергей Иванов</h3>
+                        </div>
+                        <p>Частный инвестор, IT-специалист</p>
+                        <div class="client-stats">
+                            <div class="client-stat">
+                                <div class="client-stat-value">+142%</div>
+                                <div class="client-stat-label">Рост портфеля</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">5 лет</div>
+                                <div class="client-stat-label">С нами</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="client-card corporate">
+                        <div class="client-header">
+                            <div class="client-icon">🏪</div>
+                            <h3>Торговая сеть "Восток"</h3>
+                        </div>
+                        <p>Региональная сеть супермаркетов</p>
+                        <div class="client-stats">
+                            <div class="client-stat">
+                                <div class="client-stat-value">12.7%</div>
+                                <div class="client-stat-label">Годовая доходность</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">2 года</div>
+                                <div class="client-stat-label">Партнерство</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="client-card private">
+                        <div class="client-header">
+                            <div class="client-icon">👩‍⚕️</div>
+                            <h3>Мария Петрова</h3>
+                        </div>
+                        <p>Врач, пассивный инвестор</p>
+                        <div class="client-stats">
+                            <div class="client-stat">
+                                <div class="client-stat-value">9.8%</div>
+                                <div class="client-stat-label">Средняя доходность</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">4 года</div>
+                                <div class="client-stat-label">Инвестирует</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ФОТО 6: Награды и достижения -->
+                <img src="awards-certificates.png" alt="Награды компании" class="office-image" style="margin: 2rem 0;">
+                
+                <div class="client-database-info">
+                    <h3>Статистика базы клиентов:</h3>
+                    <ul>
+                        <li>📈 <strong>Средняя доходность портфелей:</strong> 14.2% годовых</li>
+                        <li>👥 <strong>Активные клиенты:</strong> 487 компаний и частных лиц</li>
+                        <li>💰 <strong>Сумма активов под управлением:</strong> 2.3 млрд рублей</li>
+                        <li>⭐ <strong>Уровень удовлетворенности:</strong> 96% клиентов</li>
+                    </ul>
+                </div>
+                
+                <h2 class="section-title">Контакты</h2>
+                <p>Свяжитесь с нами для получения консультации или дополнительной информации:</p>
+                <ul>
+                    <li>📞 Телефон: +7 (495) 123-45-67</li>
+                    <li>✉️ Email: info@investgroup.ru</li>
+                    <li>📍 Адрес: Москва, ул. Инвестиционная, д. 15</li>
+                    <li>🕒 Время работы: Пн-Пт 9:00-18:00</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section id="services-section" class="section">
+            <h2 class="section-title">Наши услуги</h2>
+            
+            <!-- ФОТО 4: Процесс консультирования -->
+            <img src="consultation-process.png" alt="Процесс консультирования" class="company-image">
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Доверительное управление</h3>
+                    <p>Полное профессиональное управление вашими активами с целью достижения оптимального баланса между доходностью и рисками.</p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <div class="stat-value">12.5%</div>
+                            <div class="stat-label">Средняя доходность</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Успешных портфелей</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Мониторинг</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Инвестиционные стратегии</h3>
+                    <p>Разработка персональных инвестиционных стратегий, соответствующих вашим финансовым целям, горизонту инвестирования и tolerance к рискам.</p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <div class="stat-value">15+</div>
+                            <div class="stat-label">Стратегий</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">Эффективность</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Индивидуальный подход</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Консультации</h3>
+                    <p>Экспертные консультации по вопросам инвестирования, управления капиталом и финансового планирования от наших специалистов.</p>
+                    <div class="service-stats">
+                        <div class="stat">
+                            <div class="stat-value">50+</div>
+                            <div class="stat-label">Экспертов</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Конфиденциальность</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24ч</div>
+                            <div class="stat-label">Ответ на запрос</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ценные бумаги -->
+        <section id="securities-section" class="section">
+            <h2 class="section-title">Ценные бумаги</h2>
+            <div class="securities-grid">
+                <div class="security-card">
+                    <h3>Акции</h3>
+                    <div class="security-chart">
+                        <div class="chart-line"></div>
+                    </div>
+                    <p>Инвестирование в акции ведущих российских и международных компаний с потенциалом роста и дивидендными выплатами.</p>
+                    <div class="security-info">
+                        <div class="security-price">+2.4%</div>
+                        <div class="security-change">За сегодня</div>
+                    </div>
+                </div>
+                <div class="security-card">
+                    <h3>Облигации</h3>
+                    <div class="security-chart">
+                        <div class="chart-line"></div>
+                    </div>
+                    <p>Долговые инструменты с фиксированным доходом для консервативных инвесторов, ориентированных на сохранение капитала.</p>
+                    <div class="security-info">
+                        <div class="security-price">+0.8%</div>
+                        <div class="security-change">За сегодня</div>
+                    </div>
+                </div>
+                <div class="security-card">
+                    <h3>ETF</h3>
+                    <div class="security-chart">
+                        <div class="chart-line"></div>
+                    </div>
+                    <p>Биржевые инвестиционные фонды для диверсификации портфеля с минимальными затратами и широким охватом рынков.</p>
+                    <div class="security-info">
+                        <div class="security-price">+1.7%</div>
+                        <div class="security-change">За сегодня</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Клиенты -->
+        <section id="clients-section" class="section">
+            <h2 class="section-title">Наши клиенты</h2>
+            <div class="client-types">
+                <div class="client-type">
+                    <h3>Корпоративные клиенты</h3>
+                    <p>Комплексные решения для бизнеса любого масштаба — от малых предприятий до крупных корпораций.</p>
+                    <ul class="client-benefits">
+                        <li>Управление корпоративными финансами и резервами</li>
+                        <li>Инвестирование временно свободных денежных средств</li>
+                        <li>Пенсионные программы для сотрудников</li>
+                        <li>Стратегическое планирование инвестиций</li>
+                        <li>Консультации по M&A сделкам</li>
+                        <li>Оптимизация налоговой нагрузки</li>
+                    </ul>
+                </div>
+                <div class="client-type">
+                    <h3>Частные клиенты</h3>
+                    <p>Индивидуальный подход к управлению личными финансами и созданию wealth для частных инвесторов.</p>
+                    <ul class="client-benefits">
+                        <li>Создание и управление личным инвестиционным портфелем</li>
+                        <li>Пенсионное планирование и накопление</li>
+                        <li>Инвестиции в образование детей</li>
+                        <li>Накопление на крупные покупки (недвижимость, авто)</li>
+                        <li>Создание наследственного капитала</li>
+                        <li>Защита активов от инфляции</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Аналитика -->
+        <section id="analytics-section" class="section">
+            <h2 class="section-title">Аналитика и исследования</h2>
+            
+            <!-- ФОТО 5: Аналитический центр -->
+            <img src="analyics-room.png" alt="Аналитический центр" class="company-image">
+            
+            <div class="analytics-content">
+                <div class="analytics-item">
+                    <h3>Обзор рынка</h3>
+                    <p>Ежедневные, еженедельные и ежемесячные обзоры финансовых рынков с глубоким анализом трендов, ключевых событий и прогнозами движения цен.</p>
+                    
+                    <div class="market-indicators">
+                        <div class="indicator">
+                            <div class="indicator-value">+1.2%</div>
+                            <div class="indicator-label">Индекс МосБиржи</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-value">+0.8%</div>
+                            <div class="indicator-label">S&P 500</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-value">-0.3%</div>
+                            <div class="indicator-label">Нефть Brent</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-value">73.5 ₽</div>
+                            <div class="indicator-label">USD/RUB</div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-chart">
+                        <div class="chart-bars">
+                            <div class="chart-bar" style="height: 70%"></div>
+                            <div class="chart-bar" style="height: 85%"></div>
+                            <div class="chart-bar" style="height: 60%"></div>
+                            <div class="chart-bar" style="height: 90%"></div>
+                            <div class="chart-bar" style="height: 75%"></div>
+                            <div class="chart-bar" style="height: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Регистрация и Вход -->
+        <section id="auth-section" class="section">
+            <h2 class="section-title" id="auth-title">Вход в систему</h2>
+            
+            <div class="auth-forms">
+                <!-- Форма входа -->
+                <div class="auth-form" id="login-form">
+                    <h3>Вход для зарегистрированных пользователей</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Пароль</label>
+                            <input type="password" id="login-password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="remember-me" name="remember">
+                            <label for="remember-me">Запомнить меня</label>
+                        </div>
+                        <button type="submit" class="btn btn-success">Войти</button>
+                    </form>
+                    <div class="form-switch">
+                        Нет аккаунта? <a id="switch-to-register">Зарегистрироваться</a>
+                    </div>
+                </div>
+                
+                <!-- Форма регистрации -->
+                <div class="auth-form" id="register-form" style="display: none;">
+                    <h3>Регистрация нового пользователя</h3>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="register-name">ФИО *</label>
+                            <input type="text" id="register-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email *</label>
+                            <input type="email" id="register-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">Телефон *</label>
+                            <input type="tel" id="register-phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Пароль *</label>
+                            <input type="password" id="register-password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-client-type">Тип клиента *</label>
+                            <select id="register-client-type" name="client-type" required>
+                                <option value="">Выберите тип</option>
+                                <option value="private">Частное лицо</option>
+                                <option value="corporate">Корпоративный клиент</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="remember-register" name="remember" checked>
+                            <label for="remember-register">Запомнить меня</label>
+                        </div>
+                        <button type="submit" class="btn">Зарегистрироваться</button>
+                    </form>
+                    <div class="form-switch">
+                        Уже есть аккаунт? <a id="switch-to-login">Войти</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>InvestGroup</h3>
+                    <p>Профессиональные финансовые услуги и инвестиционные решения с 2008 года.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>📞 +7 (495) 123-45-67</li>
+                        <li>✉️ info@investgroup.ru</li>
+                        <li>📍 Москва, ул. Инвестиционная, д. 15</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-target="main-section">Главная</a></li>
+                        <li><a href="#" class="nav-link restricted" data-target="services-section">Услуги</a></li>
+                        <li><a href="#" class="nav-link restricted" data-target="securities-section">Ценные бумаги</a></li>
+                        <li><a href="#" class="nav-link" data-target="clients-section">Клиенты</a></li>
+                        <li><a href="#" class="nav-link restricted" data-target="analytics-section">Аналитика</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <div class="client-database">
+                        <h4>База клиентов</h4>
+                        <p>Узнайте о наших успешных клиентах и их результатах инвестирования.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 InvestGroup. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for restricted content -->
+    <div class="modal" id="restrictedModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Требуется регистрация</h2>
+            <p>Для доступа к этому разделу необходимо зарегистрироваться на сайте.</p>
+            <p>Пожалуйста, заполните форму регистрации.</p>
+            <button class="btn" id="goToRegistration">Перейти к регистрации</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+        // Auto-login if user data exists
+        if (localStorage.getItem('rememberUser') === 'true' && currentUser.email) {
+            isLoggedIn = true;
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Logo click - go to main
+        document.getElementById('mainLogo').addEventListener('click', function() {
+            showSection('main-section');
+        });
+
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Close mobile menu
+            document.querySelector('nav ul').classList.remove('show');
+            
+            // Scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Set up navigation links
+        document.querySelectorAll('nav a, .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Check if this is a restricted link and user is not logged in
+                if (this.classList.contains('restricted') && !isLoggedIn) {
+                    document.getElementById('restrictedModal').style.display = 'flex';
+                    return;
+                }
+                
+                const targetSection = this.getAttribute('data-target') || 
+                                    this.id.replace('Link', '-section');
+                
+                if (targetSection) {
+                    showSection(targetSection);
+                }
+            });
+        });
+
+        // Update UI based on login status
+        function updateUI() {
+            if (isLoggedIn) {
+                // Show user panel
+                document.getElementById('userPanel').classList.add('active');
+                
+                // Update user info
+                document.getElementById('userName').textContent = currentUser.name || 'Пользователь';
+                
+                // Remove restrictions
+                document.querySelectorAll('.restricted').forEach(item => {
+                    item.classList.remove('restricted');
+                });
+                
+                // Change auth link text
+                document.getElementById('authLink').textContent = 'Личный кабинет';
+            } else {
+                // Hide user panel
+                document.getElementById('userPanel').classList.remove('active');
+                
+                // Add restrictions
+                document.querySelectorAll('nav a').forEach(item => {
+                    if (item.id !== 'clientsLink' && item.id !== 'authLink' && item.id !== 'mainLogo') {
+                        item.classList.add('restricted');
+                    }
+                });
+                
+                // Change auth link text
+                document.getElementById('authLink').textContent = 'Вход / Регистрация';
+            }
+        }
+
+        // Form switching
+        document.getElementById('switch-to-register').addEventListener('click', function() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('auth-title').textContent = 'Регистрация';
+        });
+
+        document.getElementById('switch-to-login').addEventListener('click', function() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('auth-title').textContent = 'Вход в систему';
+        });
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // Simple validation (in real app, this would be a server request)
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                isLoggedIn = true;
+                currentUser = user;
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('rememberUser', rememberMe.toString());
+                
+                updateUI();
+                showSection('main-section');
+                alert('Успешный вход! Добро пожаловать, ' + user.name + '!');
+            } else {
+                alert('Неверный email или пароль. Попробуйте еще раз.');
+            }
+        });
+
+        // Register form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const phone = document.getElementById('register-phone').value;
+            const password = document.getElementById('register-password').value;
+            const clientType = document.getElementById('register-client-type').value;
+            const rememberMe = document.getElementById('remember-register').checked;
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.find(u => u.email === email)) {
+                alert('Пользователь с таким email уже зарегистрирован.');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                name,
+                email,
+                phone,
+                password,
+                clientType,
+                registrationDate: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Auto login after registration
+            isLoggedIn = true;
+            currentUser = newUser;
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            localStorage.setItem('rememberUser', rememberMe.toString());
+            
+            updateUI();
+            showSection('main-section');
+            alert('Регистрация прошла успешно! Добро пожаловать в InvestGroup!');
+            
+            // Reset form
+            document.getElementById('registerForm').reset();
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            isLoggedIn = false;
+            currentUser = {};
+            localStorage.setItem('isLoggedIn', 'false');
+            localStorage.removeItem('currentUser');
+            localStorage.setItem('rememberUser', 'false');
+            
+            updateUI();
+            showSection('main-section');
+            alert('Вы успешно вышли из системы.');
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('restrictedModal');
+        const closeModal = document.getElementById('closeModal');
+        const goToRegistration = document.getElementById('goToRegistration');
+        
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Go to registration from modal
+        goToRegistration.addEventListener('click', function() {
+            modal.style.display = 'none';
+            showSection('auth-section');
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('auth-title').textContent = 'Регистрация';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Initialize
+        updateUI();
+        showSection('main-section');
+    </script>
+</body>
+</html>
